@@ -182,7 +182,6 @@ main()
     }
     if (total_passengers_boarded == total_passengers) {
         printf("Looks good!\n");
-        main();
         return 0;
     } else {
         // I don't think this is reachable, but just in case.
