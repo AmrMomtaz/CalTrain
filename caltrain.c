@@ -16,14 +16,17 @@ station_init(struct station *station)
 void
 station_load_train(struct station *station, int count)
 {
+    pthread_mutex_lock(&station->mutex);
     if (count > 0 && station->passengersWaiting > 0){
-        pthread_mutex_lock(&station->mutex);
         station->seatsAvailable = count;
         pthread_cond_broadcast(&station->trainHasArrived);
         pthread_cond_wait(&station->trainReadyToGo,&station->mutex);
         station->seatsAvailable=0;
         pthread_mutex_unlock(&station->mutex);
     }
+    pthread_mutex_unlock(&station->mutex);
+
+
 }
 
 void
